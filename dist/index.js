@@ -38463,6 +38463,26 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   if (verbose)
     console.log(`The event payload: ${payload}`);
+
+  async function run() {
+    try {
+      let describeOutput = '';
+      const options = {};
+      options.listeners = {
+        stdout: (data) => {
+          describeOutput += data.toString();
+        }
+      };
+      await exec.exec('xcrun', ['--show-sdk-path', '--sdk', 'macosx'], options);
+      const tagout = describeOutput.trim();
+      console.log(`MacOSX SDK path: ${trimmed}`);
+    } catch (error) {
+      console.log(error.message);
+      //core.setFailed(error.message);
+    }
+  }
+  run();
+
 } catch (error) {
   core.setFailed(error.message);
 }
