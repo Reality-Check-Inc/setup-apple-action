@@ -1,0 +1,41 @@
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    name: "Show iOS Frameworks"
+    runs-on: macos-latest
+    # always remember that macos is bash, and slash is /
+
+    env:
+      Solution_Name: cims-field-mobile-app.sln
+      Project_Directory: cims-field-mobile-app
+      AppSettings_Path: cims-field-mobile-app/appsettings.json
+      Project_Path: cims-field-mobile-app/cims-field-mobile-app.csproj
+      Info_Path: cims-field-mobile-app/Platforms/iOS/Info.plist
+      Output_Directory: cims-field-mobile-app/AppPackages
+      Framework: net8.0-ios
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install MacOSX SDK
+      run: |
+        sdk_path=$(xcrun --show-sdk-path --sdk macosx)
+        echo "MacOSX SDK path: $sdk_path"
+
+      # ln -s $sdk_path $MacOSX_Path
+
+    - name: Show Xcode version & Frameworks
+      run: |
+        /usr/bin/xcodebuild -version
+        ls /Library/Frameworks
+
+    - name: Update appsettings, csproj and appxmanifest
+      id: info
+      uses: Reality-Check-Inc/setup-apple-action@v0.1
+      with:
+        verbose: true

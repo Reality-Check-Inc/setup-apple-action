@@ -22,14 +22,30 @@ const fs = require('fs');
 const xml2js = require('xml2js');
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
+  const verbose = core.getInput('verbose') === 'true';
+  console.log(`verbose is ${verbose} (${verbose === true})`);
+
   // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+  const payload = JSON.stringify(github.context.payload, undefined, 2);
+  if (verbose)
+    console.log(`The event payload: ${payload}`);
+
+    try {
+      let describeOutput = '';
+      const options = {};
+      options.listeners = {
+        stdout: (data) => {
+          describeOutput += data.toString();
+        }
+      };
+      await exec.exec('xcrun', ['--show-sdk-path', '--sdk', 'macosx'], options);
+      const trimmed = describeOutput.trim();
+      console.log(`MacOSX SDK path: ${trimmed}`);
+
+    } catch (error) {
+      console.log(error.message);
+    }
+
 } catch (error) {
   core.setFailed(error.message);
 }
