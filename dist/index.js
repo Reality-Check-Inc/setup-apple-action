@@ -38466,7 +38466,8 @@ try {
 
   const ciArray = ['provision'];
   //ciArray.push(4);
-  console.log(ciArray);
+  if (verbose)
+    console.log(`Option Array: ${ciArray}`);
 
   async function installTools() {
     try {
