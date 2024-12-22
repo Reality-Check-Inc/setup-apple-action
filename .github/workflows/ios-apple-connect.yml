@@ -24,13 +24,14 @@ jobs:
     # Tools
     - name: Setup AppleDev.Tools
       id: info
-      uses: Reality-Check-Inc/setup-apple-action@v0.19
+      uses: Reality-Check-Inc/setup-apple-action@v0.20
       with:
         verbose: true
-        certificate: $CERTIFICATE_PATH
-        certificate-passphrase: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-        app-store-connect-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-        app-store-connect-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-        app-store-connect-private-key: $APP_STORE_CONNECT_PRIVATE_KEY_PATH
         bundle-identifiers: 'com.companyname.mauiapp'
         profile-types: 'IOS_APP_STORE'
+
+#        certificate: $CERTIFICATE_PATH
+#        certificate-passphrase: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+#        app-store-connect-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+#        app-store-connect-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+#        app-store-connect-private-key: $APP_STORE_CONNECT_PRIVATE_KEY_PATH
