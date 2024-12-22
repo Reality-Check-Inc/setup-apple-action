@@ -55,10 +55,6 @@ try {
   console.log(`installAppStoreConnectPrivateKey is ${installAppStoreConnectPrivateKey}`);
   const appStoreConnectPrivateKeyDirectory = core.getInput('app-store-connect-private-key-directory').trim();
   console.log(`appStoreConnectPrivateKeyDirectory is ${appStoreConnectPrivateKeyDirectory}`);
-  const profileTypes = core.getInput('profile-types').split(',');
-  console.log(`profileTypes is ${profileTypes}`);
-  const bundleIdentifiers = core.getInput('bundle-identifiers').split(',');
-  console.log(`bundleIdentifiers is ${bundleIdentifiers}`);
 
   if (!isNullOrEmpty(keychain)) {
     toolArgs.push('--keychain');
@@ -103,19 +99,30 @@ try {
     toolArgs.push(appStoreConnectPrivateKeyDirectory);
   }
 
-  profileTypes.forEach((profileType) => {
-    if (!isNullOrEmpty(profileType)) {
-      toolArgs.push('--profile-type');
-      toolArgs.push(profileType);
-    }
-  });
+  // .trim();
+  const profileTypesI = core.getInput('profile-types').trim();
+  console.log(`profileTypes is ${profileTypesI}`);
+  if (!isNullOrEmpty(profileTypesI)) {
+    const profileTypes = profileTypesI.split(",");
+    profileTypes.forEach((profileType) => {
+      if (!isNullOrEmpty(profileType)) {
+        toolArgs.push('--profile-type');
+        toolArgs.push(profileType);
+      }
+    });
+  }
 
-  bundleIdentifiers.forEach((bundleIdentifier) => {
-    if (!isNullOrEmpty(bundleIdentifier)) {
-      toolArgs.push('--bundle-identifier');
-      toolArgs.push(bundleIdentifier);
-    }
-  });
+  const bundleIdentifiersI = core.getInput('bundle-identifiers').trim();
+  console.log(`bundleIdentifiers is ${bundleIdentifiersI}`);
+  if (!isNullOrEmpty(bundleIdentifiersI)) {
+    const bundleIdentifiers = bundleIdentifiersI.split(",");
+    bundleIdentifiers.forEach((bundleIdentifier) => {
+      if (!isNullOrEmpty(bundleIdentifier)) {
+        toolArgs.push('--bundle-identifier');
+        toolArgs.push(bundleIdentifier);
+      }
+    });
+  }
 
   if (verbose)
     console.log(`toolArgs: ${toolArgs}`);
