@@ -21,6 +21,12 @@ const path = require('path');
 const fs = require('fs');
 const xml2js = require('xml2js');
 
+function base64ToFile(base64String, filePath) {
+  const buffer = Buffer.from(base64String, 'base64');
+  fs.writeFileSync(filePath, buffer);
+}
+
+base64ToFile(base64Data, outputFile);
 function readDirectoryRecursive(dirPath) {
   fs.readdir(dirPath, (err, files) => {
     if (err) {
@@ -102,7 +108,16 @@ try {
 
   if (!isNullOrEmpty(certificate)) {
     toolArgs.push('--certificate');
-    toolArgs.push(certificate);
+    if (certificate.endsWith("="))
+    {
+      const outputFile = 'certificate.asc';
+      var outputPath = path.join(processDirectory, outputFile);
+      console.log(`outputFile file is ${outputPath}`);
+      base64ToFile(certificate, outputPath);
+      toolArgs.push(outputPath);
+    }
+    else
+        toolArgs.push(certificate);
   }
 
   if (!isNullOrEmpty(certificatePassphrase)) {
@@ -122,7 +137,16 @@ try {
 
   if (!isNullOrEmpty(appStoreConnectPrivateKey)) {
     toolArgs.push('--api-private-key');
-    toolArgs.push(appStoreConnectPrivateKey);
+    if (appStoreConnectPrivateKey.endsWith("="))
+    {
+      const outputFile = 'appStoreConnectPrivateKey.asc';
+      var outputPath = path.join(processDirectory, outputFile);
+      console.log(`outputFile file is ${outputPath}`);
+      base64ToFile(certificate, outputPath);
+      toolArgs.push(outputPath);
+    }   
+    else
+      toolArgs.push(appStoreConnectPrivateKey);
   }
 
   if (!isNullOrEmpty(installAppStoreConnectPrivateKey)) {
@@ -176,9 +200,10 @@ try {
       // https://www.nuget.org/packages/AppleDev.Tools
       const AppleDevToolsVersion = '0.6.2';
       await exec.exec('dotnet', ['tool', 'install', '--global', 'AppleDev.Tools', '--version', AppleDevToolsVersion], installOptions);
-      const installTrimmed = installOutput.trim();
-      if (verbose)
-        console.log(installTrimmed);
+      // all this was already shown in the exec
+      //const installTrimmed = installOutput.trim();
+      //if (verbose)
+      //  console.log(installTrimmed);
 
       //readDirectoryRecursive(processDirectory);
       //var ciPath = path.join(processDirectory, "ci");
@@ -194,9 +219,10 @@ try {
             }
           };
           await exec.exec("apple", toolArgs, ciOptions);
-          const ciTrimmed = ciOutput.trim();
-          if (verbose)
-            console.log(`ci output: ${ciTrimmed}`);
+          // all this was already shown in the exec
+          //const ciTrimmed = ciOutput.trim();
+          //if (verbose)
+          //  console.log(`ci output: ${ciTrimmed}`);
         } catch (error) {
           console.log(error.message);
         }
