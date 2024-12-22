@@ -38,16 +38,27 @@ try {
 
   const toolArgs = ['provision'];
   const keychain = core.getInput('keychain').trim();
+  console.log(`keychain is ${keychain}`);
   const keychainPassword = core.getInput('keychain-password').trim();
+  console.log(`keychainPassword is ${keychainPassword}`);
   const certificate = core.getInput('certificate').trim();
+  console.log(`certificate is ${certificate}`);
   const certificatePassphrase = core.getInput('certificate-passphrase').trim();
+  console.log(`certificatePassphrase is ${certificatePassphrase}`);
   const appStoreConnectKeyId = core.getInput('app-store-connect-key-id').trim();
+  console.log(`appStoreConnectKeyId is ${appStoreConnectKeyId}`);
   const appStoreConnectIssuerId = core.getInput('app-store-connect-issuer-id').trim();
+  console.log(`appStoreConnectIssuerId is ${appStoreConnectIssuerId}`);
   const appStoreConnectPrivateKey = core.getInput('app-store-connect-private-key').trim();
+  console.log(`appStoreConnectPrivateKey is ${appStoreConnectPrivateKey}`);
   const installAppStoreConnectPrivateKey = core.getInput('install-app-store-connect-private-key').trim();
+  console.log(`installAppStoreConnectPrivateKey is ${installAppStoreConnectPrivateKey}`);
   const appStoreConnectPrivateKeyDirectory = core.getInput('app-store-connect-private-key-directory').trim();
+  console.log(`appStoreConnectPrivateKeyDirectory is ${appStoreConnectPrivateKeyDirectory}`);
   const profileTypes = core.getInput('profile-types').split(',');
+  console.log(`profileTypes is ${profileTypes}`);
   const bundleIdentifiers = core.getInput('bundle-identifiers').split(',');
+  console.log(`bundleIdentifiers is ${bundleIdentifiers}`);
 
   if (!isNullOrEmpty(keychain)) {
     toolArgs.push('--keychain');
