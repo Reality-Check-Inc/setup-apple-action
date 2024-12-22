@@ -38455,6 +38455,10 @@ const path = __nccwpck_require__(6928);
 const fs = __nccwpck_require__(9896);
 const xml2js = __nccwpck_require__(1736);
 
+function isNullOrEmpty(str) {
+  return str == null || str.trim() === '';
+}
+
 try {
   const verbose = core.getInput('verbose') === 'true';
   console.log(`verbose is ${verbose} (${verbose === true})`);
@@ -38466,10 +38470,78 @@ try {
   if (printContext)
     console.log(`The event payload: ${payload}`);
 
-  const ciArray = ['provision'];
-  //ciArray.push(4);
+  const toolArgs = ['provision'];
+  const keychain = core.getInput('keychain').trim();
+  const keychainPassword = core.getInput('keychain-password').trim();
+  const certificate = core.getInput('certificate').trim();
+  const certificatePassphrase = core.getInput('certificate-passphrase').trim();
+  const appStoreConnectKeyId = core.getInput('app-store-connect-key-id').trim();
+  const appStoreConnectIssuerId = core.getInput('app-store-connect-issuer-id').trim();
+  const appStoreConnectPrivateKey = core.getInput('app-store-connect-private-key').trim();
+  const installAppStoreConnectPrivateKey = core.getInput('install-app-store-connect-private-key').trim();
+  const appStoreConnectPrivateKeyDirectory = core.getInput('app-store-connect-private-key-directory').trim();
+  const profileTypes = core.getInput('profile-types').split(',');
+  const bundleIdentifiers = core.getInput('bundle-identifiers').split(',');
+
+  if (!isNullOrEmpty(keychain)) {
+    toolArgs.push('--keychain');
+    toolArgs.push(keychain);
+  }
+  if (!isNullOrEmpty(keychainPassword)) {
+    toolArgs.push('--keychain-password');
+    toolArgs.push(keychainPassword);
+  }
+
+  if (!isNullOrEmpty(certificate)) {
+    toolArgs.push('--certificate');
+    toolArgs.push(certificate);
+  }
+
+  if (!isNullOrEmpty(certificatePassphrase)) {
+    toolArgs.push('--certificate-passphrase');
+    toolArgs.push(certificatePassphrase);
+  }
+
+  if (!isNullOrEmpty(appStoreConnectKeyId)) {
+    toolArgs.push('--api-key-id');
+    toolArgs.push(appStoreConnectKeyId);
+  }
+
+  if (!isNullOrEmpty(appStoreConnectIssuerId)) {
+    toolArgs.push('--api-issuer-id');
+    toolArgs.push(appStoreConnectIssuerId);
+  }
+
+  if (!isNullOrEmpty(appStoreConnectPrivateKey)) {
+    toolArgs.push('--api-private-key');
+    toolArgs.push(appStoreConnectPrivateKey);
+  }
+
+  if (!isNullOrEmpty(installAppStoreConnectPrivateKey)) {
+    toolArgs.push('--install-api-private-key');
+  }
+
+  if (!isNullOrEmpty(appStoreConnectPrivateKeyDirectory)) {
+    toolArgs.push('--api-private-key-dir');
+    toolArgs.push(appStoreConnectPrivateKeyDirectory);
+  }
+
+  profileTypes.forEach((profileType) => {
+    if (!isNullOrEmpty(profileType)) {
+      toolArgs.push('--profile-type');
+      toolArgs.push(profileType);
+    }
+  });
+
+  bundleIdentifiers.forEach((bundleIdentifier) => {
+    if (!isNullOrEmpty(bundleIdentifier)) {
+      toolArgs.push('--bundle-identifier');
+      toolArgs.push(bundleIdentifier);
+    }
+  });
+
   if (verbose)
-    console.log(`Option Array: ${ciArray}`);
+    console.log(`toolArgs: ${toolArgs}`);
 
   /*
   async function installTools() {
