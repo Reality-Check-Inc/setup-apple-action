@@ -38496,7 +38496,7 @@ try {
   if (verbose)
     console.log("process directory: ", processDirectory);
 
-  const toolArgs = ['provision'];
+  const toolArgs = ['ci', 'provision'];
   const keychain = core.getInput('keychain').trim();
   if (verbose)
     console.log(`keychain is ${keychain}`);
