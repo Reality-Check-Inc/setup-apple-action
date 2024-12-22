@@ -41,7 +41,6 @@ inputs:
   app-store-connect-private-key-directory:
     description: 'Directory to save the App Store Connect private key to.  Default is ~/private_keys'
     required: false
-
 runs:
   using: 'node20'
   main: 'dist/index.js'

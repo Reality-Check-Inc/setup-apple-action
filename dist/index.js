@@ -38469,6 +38469,7 @@ try {
   if (verbose)
     console.log(`Option Array: ${ciArray}`);
 
+  /*
   async function installTools() {
     try {
       let installOutput = '';
@@ -38482,9 +38483,9 @@ try {
       const AppleDevToolsVersion = '0.6.2';
       await exec.exec('dotnet', ['tool', 'install', '--global', 'AppleDev.Tools', '--version', AppleDevToolsVersion], installOptions);
       const installTrimmed = installOutput.trim();
-      console.log(`dotnet tool install output: ${installTrimmed}`);
+      if (verbose)
+        console.log(installTrimmed);
 
-/*
       async function ciProvision() {
         try {
           let ciOutput = '';
@@ -38502,14 +38503,13 @@ try {
         }
       }
       ciProvision();
- */
 
     } catch (error) {
       console.log(error.message);
-      //core.setFailed(error.message);
     }
   }
   installTools();
+  */
 
 } catch (error) {
   core.setFailed(error.message);
