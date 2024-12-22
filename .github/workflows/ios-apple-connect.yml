@@ -15,4 +15,4 @@ jobs:
 
     - name: Update appsettings, csproj and appxmanifest
       id: info
-      uses: Reality-Check-Inc/setup-apple-action@v0.2
+      uses: Reality-Check-Inc/setup-apple-action@v0.3

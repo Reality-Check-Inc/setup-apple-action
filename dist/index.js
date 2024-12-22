@@ -38477,7 +38477,9 @@ try {
           installOutput += data.toString();
         }
       };
-      await exec.exec('dotnet', ['tool', 'install', '--global', 'AppleDev.Tools', '--version', '0.5.0'], installOptions);
+      // https://www.nuget.org/packages/AppleDev.Tools
+      const AppleDevToolsVersion = '0.6.2';
+      await exec.exec('dotnet', ['tool', 'install', '--global', 'AppleDev.Tools', '--version', AppleDevToolsVersion], installOptions);
       const installTrimmed = installOutput.trim();
       console.log(`dotnet tool install output: ${installTrimmed}`);
 
@@ -38500,7 +38502,7 @@ try {
       }
       ciProvision();
  */
- 
+
     } catch (error) {
       console.log(error.message);
       //core.setFailed(error.message);
