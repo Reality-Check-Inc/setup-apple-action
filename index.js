@@ -69,32 +69,14 @@ try {
 
   const toolArgs = ['ci', 'provision'];
   const keychain = core.getInput('keychain').trim();
-  if (verbose)
-    console.log(`keychain is ${keychain}`);
   const keychainPassword = core.getInput('keychain-password').trim();
-  if (verbose)
-    console.log(`keychainPassword is ${keychainPassword}`);
   const certificate = core.getInput('certificate').trim();
-  if (verbose)
-    console.log(`certificate is ${certificate}`);
   const certificatePassphrase = core.getInput('certificate-passphrase').trim();
-  if (verbose)
-    console.log(`certificatePassphrase is ${certificatePassphrase}`);
   const appStoreConnectKeyId = core.getInput('app-store-connect-key-id').trim();
-  if (verbose)
-    console.log(`appStoreConnectKeyId is ${appStoreConnectKeyId}`);
   const appStoreConnectIssuerId = core.getInput('app-store-connect-issuer-id').trim();
-  if (verbose)
-    console.log(`appStoreConnectIssuerId is ${appStoreConnectIssuerId}`);
   const appStoreConnectPrivateKey = core.getInput('app-store-connect-private-key').trim();
-  if (verbose)
-    console.log(`appStoreConnectPrivateKey is ${appStoreConnectPrivateKey}`);
   const installAppStoreConnectPrivateKey = core.getInput('install-app-store-connect-private-key').trim();
-  if (verbose)
-    console.log(`installAppStoreConnectPrivateKey is ${installAppStoreConnectPrivateKey}`);
   const appStoreConnectPrivateKeyDirectory = core.getInput('app-store-connect-private-key-directory').trim();
-  if (verbose)
-    console.log(`appStoreConnectPrivateKeyDirectory is ${appStoreConnectPrivateKeyDirectory}`);
 
   if (!isNullOrEmpty(keychain)) {
     toolArgs.push('--keychain');
@@ -111,7 +93,6 @@ try {
     {
       const outputFile = 'certificate.asc';
       var outputPath = path.join(processDirectory, outputFile);
-      console.log(`outputFile file is ${outputPath}`);
       base64ToFile(certificate, outputPath);
       toolArgs.push(outputPath);
     }
@@ -140,7 +121,6 @@ try {
     {
       const outputFile = 'appStoreConnectPrivateKey.asc';
       var outputPath = path.join(processDirectory, outputFile);
-      console.log(`outputFile file is ${outputPath}`);
       base64ToFile(appStoreConnectPrivateKey, outputPath);
       toolArgs.push(outputPath);
     }
@@ -157,10 +137,7 @@ try {
     toolArgs.push(appStoreConnectPrivateKeyDirectory);
   }
 
-  // .trim();
   const profileTypesI = core.getInput('profile-types').trim();
-  if (verbose)
-    console.log(`profileTypes is ${profileTypesI}`);
   if (!isNullOrEmpty(profileTypesI)) {
     const profileTypes = profileTypesI.split(",");
     profileTypes.forEach((profileType) => {
@@ -172,8 +149,6 @@ try {
   }
 
   const bundleIdentifiersI = core.getInput('bundle-identifiers').trim();
-  if (verbose)
-    console.log(`bundleIdentifiers is ${bundleIdentifiersI}`);
   if (!isNullOrEmpty(bundleIdentifiersI)) {
     const bundleIdentifiers = bundleIdentifiersI.split(",");
     bundleIdentifiers.forEach((bundleIdentifier) => {
