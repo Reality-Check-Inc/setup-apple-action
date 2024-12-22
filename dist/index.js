@@ -38455,6 +38455,29 @@ const path = __nccwpck_require__(6928);
 const fs = __nccwpck_require__(9896);
 const xml2js = __nccwpck_require__(1736);
 
+function readDirectoryRecursive(dirPath) {
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      console.error('Error reading directory:', err);
+      return;
+    }
+    files.forEach(file => {
+      const filePath = path.join(dirPath, file);
+      fs.stat(filePath, (err, stats) => {
+        if (err) {
+          console.error('Error getting file stats:', err);
+          return;
+        }
+        if (stats.isDirectory()) {
+          readDirectoryRecursive(filePath); // Recursively read subdirectory
+        } else {
+          console.log(filePath); // Process file
+        }
+      });
+    });
+  });
+}
+
 function isNullOrEmpty(str) {
   return str == null || str.trim() === '';
 }
@@ -38469,6 +38492,9 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   if (printContext)
     console.log(`The event payload: ${payload}`);
+  const processDirectory = process.cwd();
+  if (verbose)
+    console.log("process directory: ", processDirectory);
 
   const toolArgs = ['provision'];
   const keychain = core.getInput('keychain').trim();
@@ -38588,6 +38614,10 @@ try {
       if (verbose)
         console.log(installTrimmed);
 
+      readDirectoryRecursive(processDirectory);
+      var ciPath = path.join(processDirectory, "ci");
+      console.log(`ci is ${ciPath}`);
+
       async function ciProvision() {
         try {
           let ciOutput = '';
@@ -38597,7 +38627,7 @@ try {
               ciOutput += data.toString();
             }
           };
-          await exec.exec('ci', toolArgs, ciOptions);
+          await exec.exec(ciPath, toolArgs, ciOptions);
           const ciTrimmed = ciOutput.trim();
           if (verbose)
             console.log(`ci output: ${ciTrimmed}`);
