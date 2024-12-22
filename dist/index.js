@@ -38492,6 +38492,8 @@ try {
   console.log(`verbose is ${verbose} (${verbose === true})`);
   const printContext = core.getInput('printContext') === 'true';
   console.log(`printContext is ${printContext} (${printContext === true})`);
+  const AppleDevToolsVersion = core.getInput('version');
+  console.log(`AppleDev.Tools version request is ${AppleDevToolsVersion}`);
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
@@ -38606,7 +38608,6 @@ try {
         }
       };
       // https://www.nuget.org/packages/AppleDev.Tools
-      const AppleDevToolsVersion = '0.6.2';
       await exec.exec('dotnet', ['tool', 'install', '--global', 'AppleDev.Tools', '--version', AppleDevToolsVersion], installOptions);
       // all this was already shown in the exec
       //const installTrimmed = installOutput.trim();
@@ -38628,9 +38629,9 @@ try {
           };
           await exec.exec("apple", toolArgs, ciOptions);
           // all this was already shown in the exec
-          const ciTrimmed = ciOutput.trim();
-          if (verbose)
-            console.log(`apple output: ${ciTrimmed}`);
+          //const ciTrimmed = ciOutput.trim();
+          //if (verbose)
+          //  console.log(`apple output: ${ciTrimmed}`);
         } catch (error) {
           console.log(error.message);
         }

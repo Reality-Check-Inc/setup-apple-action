@@ -24,7 +24,7 @@ jobs:
     # Tools
     - name: Setup AppleDev.Tools
       id: info
-      uses: Reality-Check-Inc/setup-apple-action@v0.20
+      uses: Reality-Check-Inc/setup-apple-action@v0.22
       with:
         verbose: true
         bundle-identifiers: 'com.companyname.mauiapp'
