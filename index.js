@@ -38,23 +38,32 @@ try {
 
   const toolArgs = ['provision'];
   const keychain = core.getInput('keychain').trim();
-  console.log(`keychain is ${keychain}`);
+  if (verbose)
+    console.log(`keychain is ${keychain}`);
   const keychainPassword = core.getInput('keychain-password').trim();
-  console.log(`keychainPassword is ${keychainPassword}`);
+  if (verbose)
+    console.log(`keychainPassword is ${keychainPassword}`);
   const certificate = core.getInput('certificate').trim();
-  console.log(`certificate is ${certificate}`);
+  if (verbose)
+    console.log(`certificate is ${certificate}`);
   const certificatePassphrase = core.getInput('certificate-passphrase').trim();
-  console.log(`certificatePassphrase is ${certificatePassphrase}`);
+  if (verbose)
+    console.log(`certificatePassphrase is ${certificatePassphrase}`);
   const appStoreConnectKeyId = core.getInput('app-store-connect-key-id').trim();
-  console.log(`appStoreConnectKeyId is ${appStoreConnectKeyId}`);
+  if (verbose)
+    console.log(`appStoreConnectKeyId is ${appStoreConnectKeyId}`);
   const appStoreConnectIssuerId = core.getInput('app-store-connect-issuer-id').trim();
-  console.log(`appStoreConnectIssuerId is ${appStoreConnectIssuerId}`);
+  if (verbose)
+    console.log(`appStoreConnectIssuerId is ${appStoreConnectIssuerId}`);
   const appStoreConnectPrivateKey = core.getInput('app-store-connect-private-key').trim();
-  console.log(`appStoreConnectPrivateKey is ${appStoreConnectPrivateKey}`);
+  if (verbose)
+    console.log(`appStoreConnectPrivateKey is ${appStoreConnectPrivateKey}`);
   const installAppStoreConnectPrivateKey = core.getInput('install-app-store-connect-private-key').trim();
-  console.log(`installAppStoreConnectPrivateKey is ${installAppStoreConnectPrivateKey}`);
+  if (verbose)
+    console.log(`installAppStoreConnectPrivateKey is ${installAppStoreConnectPrivateKey}`);
   const appStoreConnectPrivateKeyDirectory = core.getInput('app-store-connect-private-key-directory').trim();
-  console.log(`appStoreConnectPrivateKeyDirectory is ${appStoreConnectPrivateKeyDirectory}`);
+  if (verbose)
+    console.log(`appStoreConnectPrivateKeyDirectory is ${appStoreConnectPrivateKeyDirectory}`);
 
   if (!isNullOrEmpty(keychain)) {
     toolArgs.push('--keychain');
@@ -101,7 +110,8 @@ try {
 
   // .trim();
   const profileTypesI = core.getInput('profile-types').trim();
-  console.log(`profileTypes is ${profileTypesI}`);
+  if (verbose)
+    console.log(`profileTypes is ${profileTypesI}`);
   if (!isNullOrEmpty(profileTypesI)) {
     const profileTypes = profileTypesI.split(",");
     profileTypes.forEach((profileType) => {
@@ -113,7 +123,8 @@ try {
   }
 
   const bundleIdentifiersI = core.getInput('bundle-identifiers').trim();
-  console.log(`bundleIdentifiers is ${bundleIdentifiersI}`);
+  if (verbose)
+    console.log(`bundleIdentifiers is ${bundleIdentifiersI}`);
   if (!isNullOrEmpty(bundleIdentifiersI)) {
     const bundleIdentifiers = bundleIdentifiersI.split(",");
     bundleIdentifiers.forEach((bundleIdentifier) => {
@@ -127,7 +138,6 @@ try {
   if (verbose)
     console.log(`toolArgs: ${toolArgs}`);
 
-  /*
   async function installTools() {
     try {
       let installOutput = '';
@@ -153,9 +163,10 @@ try {
               ciOutput += data.toString();
             }
           };
-          await exec.exec('ci', ciArray, ciOptions);
+          await exec.exec('ci', toolArgs, ciOptions);
           const ciTrimmed = ciOutput.trim();
-          console.log(`ci output: ${ciTrimmed}`);
+          if (verbose)
+            console.log(`ci output: ${ciTrimmed}`);
         } catch (error) {
           console.log(error.message);
         }
@@ -167,7 +178,6 @@ try {
     }
   }
   installTools();
-  */
 
 } catch (error) {
   core.setFailed(error.message);
