@@ -30,24 +30,49 @@ try {
   if (verbose)
     console.log(`The event payload: ${payload}`);
 
-  async function run() {
+  const ciArray = ['provision'];
+  //ciArray.push(4);
+  console.log(ciArray);
+
+  async function installTools() {
     try {
-      let describeOutput = '';
-      const options = {};
-      options.listeners = {
+      let installOutput = '';
+      const installOptions = {};
+      installOptions.listeners = {
         stdout: (data) => {
-          describeOutput += data.toString();
+          installOutput += data.toString();
         }
       };
-      await exec.exec('xcrun', ['--show-sdk-path', '--sdk', 'macosx'], options);
-      const tagout = describeOutput.trim();
-      console.log(`MacOSX SDK path: ${trimmed}`);
+      await exec.exec('dotnet', ['tool', 'install', '--global', 'AppleDev.Tools', '--version', '0.5.0'], installOptions);
+      const installTrimmed = installOutput.trim();
+      console.log(`dotnet tool install output: ${installTrimmed}`);
+
+/*
+      async function ciProvision() {
+        try {
+          let ciOutput = '';
+          const ciOptions = {};
+          ciOptions.listeners = {
+            stdout: (data) => {
+              ciOutput += data.toString();
+            }
+          };
+          await exec.exec('ci', ciArray, ciOptions);
+          const ciTrimmed = ciOutput.trim();
+          console.log(`ci output: ${ciTrimmed}`);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      ciProvision();
+ */
+ 
     } catch (error) {
       console.log(error.message);
       //core.setFailed(error.message);
     }
   }
-  run();
+  installTools();
 
 } catch (error) {
   core.setFailed(error.message);

@@ -1,0 +1,18 @@
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    name: "Apple Connect API"
+    runs-on: macos-latest
+    # always remember that macos is bash, and slash is /
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Update appsettings, csproj and appxmanifest
+      id: info
+      uses: Reality-Check-Inc/setup-apple-action@v0.1
