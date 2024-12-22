@@ -38628,9 +38628,9 @@ try {
           };
           await exec.exec("apple", toolArgs, ciOptions);
           // all this was already shown in the exec
-          //const ciTrimmed = ciOutput.trim();
-          //if (verbose)
-          //  console.log(`ci output: ${ciTrimmed}`);
+          const ciTrimmed = ciOutput.trim();
+          if (verbose)
+            console.log(`apple output: ${ciTrimmed}`);
         } catch (error) {
           console.log(error.message);
         }
