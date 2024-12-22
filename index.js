@@ -26,7 +26,6 @@ function base64ToFile(base64String, filePath) {
   fs.writeFileSync(filePath, buffer);
 }
 
-base64ToFile(base64Data, outputFile);
 function readDirectoryRecursive(dirPath) {
   fs.readdir(dirPath, (err, files) => {
     if (err) {
@@ -142,9 +141,9 @@ try {
       const outputFile = 'appStoreConnectPrivateKey.asc';
       var outputPath = path.join(processDirectory, outputFile);
       console.log(`outputFile file is ${outputPath}`);
-      base64ToFile(certificate, outputPath);
+      base64ToFile(appStoreConnectPrivateKey, outputPath);
       toolArgs.push(outputPath);
-    }   
+    }
     else
       toolArgs.push(appStoreConnectPrivateKey);
   }
