@@ -38458,10 +38458,12 @@ const xml2js = __nccwpck_require__(1736);
 try {
   const verbose = core.getInput('verbose') === 'true';
   console.log(`verbose is ${verbose} (${verbose === true})`);
+  const printContext = core.getInput('printContext') === 'true';
+  console.log(`printContext is ${printContext} (${printContext === true})`);
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
-  if (verbose)
+  if (printContext)
     console.log(`The event payload: ${payload}`);
 
   const ciArray = ['provision'];

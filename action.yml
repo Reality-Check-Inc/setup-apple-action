@@ -8,6 +8,10 @@ inputs:
     description: 'verbose output'
     required: false
     default: false
+  printContext:
+    description: 'dump context'
+    required: false
+    default: false
   keychain:
     description: 'Keychain file to import certificates to (can leave blank, will default to build.keychain-db). Example, "build.keychain-db".'
     required: false
