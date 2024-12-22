@@ -180,9 +180,9 @@ try {
       if (verbose)
         console.log(installTrimmed);
 
-      readDirectoryRecursive(processDirectory);
-      var ciPath = path.join(processDirectory, "ci");
-      console.log(`ci is ${ciPath}`);
+      //readDirectoryRecursive(processDirectory);
+      //var ciPath = path.join(processDirectory, "ci");
+      //console.log(`ci is ${ciPath}`);
 
       async function ciProvision() {
         try {
@@ -193,7 +193,7 @@ try {
               ciOutput += data.toString();
             }
           };
-          await exec.exec(ciPath, toolArgs, ciOptions);
+          await exec.exec("apple", toolArgs, ciOptions);
           const ciTrimmed = ciOutput.trim();
           if (verbose)
             console.log(`ci output: ${ciTrimmed}`);

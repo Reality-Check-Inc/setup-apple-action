@@ -24,7 +24,7 @@ jobs:
     # Tools
     - name: Setup AppleDev.Tools
       id: info
-      uses: Reality-Check-Inc/setup-apple-action@v0.13
+      uses: Reality-Check-Inc/setup-apple-action@v0.14
       with:
         verbose: true
         certificate: $CERTIFICATE_PATH
