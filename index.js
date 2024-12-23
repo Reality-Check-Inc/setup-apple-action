@@ -60,6 +60,8 @@ try {
   console.log(`printContext is ${printContext} (${printContext === true})`);
   const AppleDevToolsVersion = core.getInput('version');
   console.log(`AppleDev.Tools version request is ${AppleDevToolsVersion}`);
+  const import = core.getInput('import') === 'true';
+  console.log(`import is ${import} (${import === true})`);
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
@@ -183,26 +185,31 @@ try {
       //readDirectoryRecursive(processDirectory);
       //var ciPath = path.join(processDirectory, "ci");
       //console.log(`ci is ${ciPath}`);
-
-      async function ciProvision() {
-        try {
-          let ciOutput = '';
-          const ciOptions = {};
-          ciOptions.listeners = {
-            stdout: (data) => {
-              ciOutput += data.toString();
-            }
-          };
-          await exec.exec("apple", toolArgs, ciOptions);
-          // all this was already shown in the exec
-          //const ciTrimmed = ciOutput.trim();
-          //if (verbose)
-          //  console.log(`apple output: ${ciTrimmed}`);
-        } catch (error) {
-          console.log(error.message);
+      if (import)
+      {
+        async function ciProvision() {
+          try {
+            let ciOutput = '';
+            const ciOptions = {};
+            ciOptions.listeners = {
+              stdout: (data) => {
+                ciOutput += data.toString();
+              }
+            };
+            await exec.exec("apple", toolArgs, ciOptions);
+            // all this was already shown in the exec
+            //const ciTrimmed = ciOutput.trim();
+            //if (verbose)
+            //  console.log(`apple output: ${ciTrimmed}`);
+          } catch (error) {
+            console.log(error.message);
+          }
         }
+        ciProvision();
       }
-      ciProvision();
+      else {
+        console.log(` *** import certificates skipped.`);        
+      }
 
     } catch (error) {
       console.log(error.message);
