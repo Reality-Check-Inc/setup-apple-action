@@ -60,8 +60,8 @@ try {
   console.log(`printContext is ${printContext} (${printContext === true})`);
   const AppleDevToolsVersion = core.getInput('version');
   console.log(`AppleDev.Tools version request is ${AppleDevToolsVersion}`);
-  const import = core.getInput('import') === 'true';
-  console.log(`import is ${import} (${import === true})`);
+  const importCerts = core.getInput('import') === 'true';
+  console.log(`import is ${importCerts} (${importCerts === true})`);
 
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2);
@@ -185,7 +185,7 @@ try {
       //readDirectoryRecursive(processDirectory);
       //var ciPath = path.join(processDirectory, "ci");
       //console.log(`ci is ${ciPath}`);
-      if (import)
+      if (importCerts)
       {
         async function ciProvision() {
           try {
@@ -208,7 +208,7 @@ try {
         ciProvision();
       }
       else {
-        console.log(` *** import certificates skipped.`);        
+        console.log(` *** import certificates skipped.`);
       }
 
     } catch (error) {
