@@ -38643,6 +38643,25 @@ try {
       }
       else {
         console.log(` *** import certificates skipped.`);
+
+        async function appleHelp() {
+          try {
+            let ciOutput = '';
+            const ciOptions = {};
+            ciOptions.listeners = {
+              stdout: (data) => {
+                ciOutput += data.toString();
+              }
+            };
+            await exec.exec("apple", ['--help'], ciOptions);
+            const ciTrimmed = ciOutput.trim();
+            if (verbose)
+              console.log(`apple output: ${ciTrimmed}`);
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+        appleHelp();
       }
 
     } catch (error) {

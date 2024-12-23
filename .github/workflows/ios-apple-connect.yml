@@ -24,7 +24,7 @@ jobs:
     # Tools
     - name: Setup AppleDev.Tools
       id: info
-      uses: Reality-Check-Inc/setup-apple-action@v0.24
+      uses: Reality-Check-Inc/setup-apple-action@v0.25
       with:
         verbose: true
         import: false
