@@ -1,4 +1,7 @@
 // index.js
+// AppleDev.Tools
+// https://github.com/Redth/AppleDev.Tools
+// https://github.com/maui-actions/apple-provisioning
 
 // https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-javascript-action
 /*
@@ -60,7 +63,7 @@ try {
   console.log(`printContext is ${printContext} (${printContext === true})`);
   const AppleDevToolsVersion = core.getInput('version');
   console.log(`AppleDev.Tools version request is ${AppleDevToolsVersion}`);
-  const importCerts = core.getInput('import') === 'true';
+  var importCerts = core.getInput('import') === 'true';
   console.log(`import is ${importCerts} (${importCerts === true})`);
 
   // Get the JSON webhook payload for the event that triggered the workflow
@@ -71,7 +74,17 @@ try {
   if (verbose)
     console.log("process directory: ", processDirectory);
 
-  const toolArgs = ['ci', 'provision'];
+  //const toolArgs = ['ci', 'provision'];
+  const command = core.getInput('command');
+  console.log(`command is ${command}`);
+  const toolArgs = ref.split(" ");
+  if (command != 'ci provision')
+  {
+    console.log(` *** going to run AppleDev.Tools with ${command}`);
+    importCerts = true;
+  }
+
+  //
   const keychain = core.getInput('keychain').trim();
   const keychainPassword = core.getInput('keychain-password').trim();
   const certificate = core.getInput('certificate').trim();

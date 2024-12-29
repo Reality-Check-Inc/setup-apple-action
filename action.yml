@@ -16,6 +16,10 @@ inputs:
     description: 'AppleDev.Tools version'
     required: false
     default: '0.6.2'
+  command:
+    description: 'AppleDev.Tools command'
+    required: false
+    default: 'ci provision'
   import:
     description: 'use Connect API to download and import certificates'
     required: false
