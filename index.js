@@ -77,7 +77,7 @@ try {
   //const toolArgs = ['ci', 'provision'];
   const command = core.getInput('command');
   console.log(`command is ${command}`);
-  const toolArgs = ref.split(" ");
+  const toolArgs = command.split(" ");
   if (command != 'ci provision')
   {
     console.log(` *** going to run AppleDev.Tools with ${command}`);
